@@ -1,4 +1,10 @@
-const mergeSort = (arr) => {
+const arr = [6, 1, 3, 8, 7, 2, 4, 5];
+
+let countInversions = (arr) => {
+  let totalCount = 0;
+
+  if (arr.length < 2) return totalCount;
+
   const dismember = (arr) => {
     let result = [];
 
@@ -17,6 +23,7 @@ const mergeSort = (arr) => {
   };
 
   const merge = (left, right) => {
+    let count = 0;
     let result = [];
     let l = 0;
     let r = 0;
@@ -41,10 +48,11 @@ const mergeSort = (arr) => {
       } else {
         result[k] = right[r];
         r++;
+        count += left.length - l;
       }
     }
 
-    return result;
+    return { mergedList: result, count };
   };
 
   let result = dismember([arr]);
@@ -55,7 +63,11 @@ const mergeSort = (arr) => {
 
     while (result[i]) {
       if (result[i + 1]) {
-        temp = [...temp, merge(result[i], result[i + 1])];
+        const mergeResult = merge(result[i], result[i + 1]);
+        const { mergedList, count } = mergeResult;
+
+        totalCount += count;
+        temp = [...temp, mergedList];
         i += 2;
         continue;
       }
@@ -65,7 +77,18 @@ const mergeSort = (arr) => {
     result = temp;
   }
 
-  return result[0];
+  return totalCount;
 };
 
-console.log(mergeSort([6, 1, 3, 8, 7, 2, 4, 5]));
+const bruceForce = (arr) => {
+  let count = 0;
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = i; j < arr.length; j++) {
+      if (arr[i] > arr[j]) count++;
+    }
+  }
+  return count;
+};
+
+console.log(bruceForce(arr));
+console.log(countInversions(arr));
