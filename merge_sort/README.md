@@ -1,11 +1,6 @@
----
-tags:
-  - algorithms illuminated
----
-
 # Merge Sort
 
-# Why study merge sort?
+## Why study merge sort?
 
 - Good introduction to divide & conquer
 
